@@ -1,0 +1,36 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven {
+			name = 'Fabric'
+			url = 'http://maven.modmuss50.me/'
+		}
+	}
+	dependencies {
+		classpath "net.fabricmc:fabric-loom:0.0.12-SNAPSHOT"
+	}
+}
+
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+}
+
+apply plugin: net.fabricmc.loom.LoomGradlePlugin
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+archivesBaseName = "modid"
+version = "1.0.0"
+
+minecraft {
+	// You can find the latest versions on https://fabric.asie.pl/use/.
+	version = "18w44a"
+	pomfVersion = "27"
+	fabricVersion = "0.1.0.40"
+
+	// Optional. Remove if you're not using Mixins.
+	refmapName = "modid.refmap.json"
+}

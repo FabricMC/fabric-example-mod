@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.fabricmc.example.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "refmap": "modid.refmap.json",
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

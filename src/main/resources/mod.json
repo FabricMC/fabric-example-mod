@@ -1,0 +1,11 @@
+{
+  "id": "modid",
+  "name": "Example Mod",
+  "version": "1.0.0",
+  "side": "universal",
+  "initializer": "net.fabricmc.example.ExampleMod",
+  "mixins": {
+    "client": "modid.client.json",
+    "common": "modid.common.json"
+  }
+}
