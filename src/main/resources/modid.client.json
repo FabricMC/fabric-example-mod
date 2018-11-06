@@ -5,7 +5,6 @@
   "mixins": [
     "ExampleMixin"
   ],
-  "refmap": "modid.refmap.json",
   "injectors": {
     "defaultRequire": 1
   }

@@ -8,7 +8,7 @@
 2. Run the following command:
 
 ```
-./gradlew setup idea
+./gradlew idea
 ```
 
 ## License
