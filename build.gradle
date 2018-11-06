@@ -1,23 +1,9 @@
-buildscript {
-	repositories {
-		jcenter()
-		maven {
-			name = 'Fabric'
-			url = 'http://maven.modmuss50.me/'
-		}
-	}
-	dependencies {
-		classpath "net.fabricmc:fabric-loom:0.0.13-SNAPSHOT"
-	}
-}
-
 plugins {
 	id 'java'
 	id 'eclipse'
 	id 'idea'
+	id 'fabric-loom' version '0.0.13-SNAPSHOT'
 }
-
-apply plugin: net.fabricmc.loom.LoomGradlePlugin
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

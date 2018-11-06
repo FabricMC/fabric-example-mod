@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'http://maven.modmuss50.me/'
+        }
+        gradlePluginPortal()
+    }
+}
