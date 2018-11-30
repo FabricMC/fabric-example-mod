@@ -29,7 +29,7 @@ minecraft {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:18w44a"
-	mappings "net.fabricmc:pomf:18w44a.38"
-	modCompile "net.fabricmc:fabric-loader:18w44a-0.1.0.43"
+	minecraft "com.mojang:minecraft:18w48b"
+	mappings "net.fabricmc:pomf:18w48b.4"
+	modCompile "net.fabricmc:fabric-loader:0.1.0.48"
 }
