@@ -1,8 +1,5 @@
 plugins {
-	id 'java'
-	id 'eclipse'
-	id 'idea'
-	id 'fabric-loom' version '0.0.14-SNAPSHOT'
+	id 'fabric-loom' version '0.1.0-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
@@ -15,7 +12,10 @@ minecraft {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:18w48b"
-	mappings "net.fabricmc:pomf:18w48b.4"
-	modCompile "net.fabricmc:fabric-loader:0.1.0.48"
+	minecraft "com.mojang:minecraft:18w49a"
+	mappings "net.fabricmc:pomf:18w49a.19"
+	modCompile "net.fabricmc:fabric-loader:0.2.0.53"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modCompile "net.fabricmc:fabric:0.1.0"
 }
