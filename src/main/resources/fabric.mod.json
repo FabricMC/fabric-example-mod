@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "side": "universal",
   "initializer": "net.fabricmc.example.ExampleMod",
+  "requires": {
+    "fabric": "*"
+  },
   "mixins": {
     "client": "modid.client.json",
     "common": "modid.common.json"
