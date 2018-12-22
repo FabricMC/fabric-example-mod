@@ -13,11 +13,11 @@ minecraft {
 
 dependencies {
 	minecraft "com.mojang:minecraft:18w50a"
-	mappings "net.fabricmc:yarn:18w50a.59"
-	modCompile "net.fabricmc:fabric-loader:0.3.0.73"
+	mappings "net.fabricmc:yarn:18w50a.64"
+	modCompile "net.fabricmc:fabric-loader:0.3.0.74"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.1.1.61"
+	modCompile "net.fabricmc:fabric:0.1.2.63"
 }
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
