@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.1.0-SNAPSHOT'
+	id 'fabric-loom' version '0.2.0-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
@@ -13,9 +13,9 @@ minecraft {
 
 dependencies {
 	minecraft "com.mojang:minecraft:18w50a"
-	mappings "net.fabricmc:yarn:18w50a.56"
-	modCompile "net.fabricmc:fabric-loader:0.2.0.71"
+	mappings "net.fabricmc:yarn:18w50a.59"
+	modCompile "net.fabricmc:fabric-loader:0.3.0.73"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.1.1.58"
+	modCompile "net.fabricmc:fabric:0.1.1.61"
 }
