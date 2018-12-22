@@ -19,3 +19,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc:fabric:0.1.1.61"
 }
+
+// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+// if it is present.
+// If you remove this task, sources will not be generated.
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
