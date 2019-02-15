@@ -8,6 +8,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
+group = project.maven_group
 
 minecraft {
 }
