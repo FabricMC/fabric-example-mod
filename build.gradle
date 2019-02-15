@@ -23,6 +23,24 @@ dependencies {
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
 }
 
+processResources {
+	// this will ensure that this task is re-run when there's a change
+	inputs.property "version", project.version
+
+	// replace stuff in fabric.mod.json, nothing else
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+
+		// add mod metadata
+		expand "version": project.version
+	}
+
+	// copy everything else, thats not the mcmod.info
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
+}
+
 // ensure that the encoding is set to UTF-8, no matter what the system default is
 // this fixes some edge cases with special characters not displaying correctly
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
@@ -34,7 +52,7 @@ tasks.withType(JavaCompile) {
 // if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
+	classifier = "sources"
 	from sourceSets.main.allSource
 }
 
@@ -51,7 +69,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 if (JavaVersion.current().isJava8Compatible()) {
 	allprojects {
 		tasks.withType(Javadoc) {
-			options.addStringOption('Xdoclint:none', '-quiet')
+			options.addStringOption("Xdoclint:none", "-quiet")
 		}
 	}
 }
