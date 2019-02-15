@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.2.0-SNAPSHOT'
+    id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -35,3 +36,49 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = 'sources'
 	from sourceSets.main.allSource
 }
+
+// create a javadoc file for publishing
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    from "LICENSE"
+    classifier = "javadoc"
+}
+
+// make the javadoc tool be more lenient when using Java 8
+// this fixes the javadoc tool breaking on things like self-closed <br /> tags
+// see https://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+jar {
+    from "LICENSE"
+}
+
+// configure the maven publication
+publishing {
+    publications {
+
+        mavenJava(MavenPublication) {
+            // add all the jars that should be included when publishing to maven
+            artifact jar
+            artifact javadocJar
+            artifact sourcesJar
+        }
+    }
+
+    // select the repositories you want to publish to
+    repositories {
+        // uncomment to publish to the local maven
+        // mavenLocal()
+    }
+}
+
+// make sure that jars are properly remapped before uploading
+tasks.publish.dependsOn build
+tasks.build.dependsOn javadocJar
+
