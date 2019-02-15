@@ -56,24 +56,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 
-// create a javadoc file for publishing
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	from javadoc.destinationDir
-	from "LICENSE"
-	classifier = "javadoc"
-}
-
-// make the javadoc tool be more lenient when using Java 8
-// this fixes the javadoc tool breaking on things like self-closed <br /> tags
-// see https://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
-if (JavaVersion.current().isJava8Compatible()) {
-	allprojects {
-		tasks.withType(Javadoc) {
-			options.addStringOption("Xdoclint:none", "-quiet")
-		}
-	}
-}
-
 jar {
 	from "LICENSE"
 }
@@ -86,7 +68,6 @@ publishing {
 			artifact(jar) {
 				builtBy remapJar
 			}
-			artifact javadocJar
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
@@ -99,5 +80,3 @@ publishing {
 		// mavenLocal()
 	}
 }
-tasks.build.dependsOn javadocJar
-
