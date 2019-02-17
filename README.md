@@ -2,14 +2,25 @@
 
 ## Setup
 
-1. Edit build.gradle and mod.json to suit your needs.
-    * The "mixins" object can be removed from mod.json if you do not need to use mixins.
-    * Please replace all occurences of "modid" with your own mod ID - sometimes, a different string may also suffice.
-2. Run the following command:
+1. Edit gradle.properties with the information of your mod.
+```
+# Mod Properties
+	mod_version = 1.0.0
+	maven_group = net.fabricmc
+	archives_base_name = fabric-example-mod
+```
+
+2. Run the following command to fetch Fabric dependencies:
 
 ```
-./gradlew idea
+./gradlew genSources
 ```
+
+### Optional IDE Setup:
+
+- IntelliJ IDEA: `./gradlew idea`
+- Visual Studio Code: see [Setting up Visual Studio Code with Fabric](https://fabricmc.net/wiki/setup:vscode)
+- Eclipse: see [Setting up Eclipse with Fabric](https://fabricmc.net/wiki/setup:eclipse)
 
 ## License
 
