@@ -8,6 +8,12 @@
 	mod_version = 1.0.0
 	maven_group = com.myteam
 	archives_base_name = mymod
+	
+# The following properties can be copied from https://modmuss50.me/fabric.html
+	minecraft_version=19w08b
+	yarn_mappings=19w08b.4
+	loader_version=0.3.7.109
+	fabric_version=0.2.3.104
 ```
 
 2. Adjust the java classes structures and the resources resources json files to suit your needs:
