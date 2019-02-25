@@ -24,18 +24,13 @@ dependencies {
 }
 
 processResources {
-	// this will ensure that this task is re-run when there's a change
 	inputs.property "version", project.version
 
-	// replace stuff in fabric.mod.json, nothing else
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
-
-		// add mod metadata
 		expand "version": project.version
 	}
 
-	// copy everything else, thats not the mcmod.info
 	from(sourceSets.main.resources.srcDirs) {
 		exclude "fabric.mod.json"
 	}
