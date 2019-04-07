@@ -1,17 +1,36 @@
 {
+  "schemaVersion": 1,
   "id": "modid",
+  "version": "${version}",
+
   "name": "Example Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
-  "version": "${version}",
-  "side": "universal",
-  "initializers": [
-    "net.fabricmc.example.ExampleMod"
+  "authors": [
+    "Me!"
   ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fabricmc.example.ExampleMod"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
   "requires": {
+    "fabricloader": ">=0.4.0",
     "fabric": "*"
   },
-  "mixins": {
-    "client": "modid.client.json",
-    "common": "modid.common.json"
+  "suggests": {
+    "flamingo": "*"
   }
 }
