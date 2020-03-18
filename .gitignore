@@ -5,6 +5,10 @@ build/
 out/
 classes/
 
+# eclipse
+
+*.launch
+
 # idea
 
 .idea/
