@@ -8,13 +8,18 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
-public class ExampleMixin extends Screen {
-	@Inject(at = @At("HEAD"), method = "init()V")
+public abstract class ExampleMixin extends Screen {
+	private MixinTitleScreen(Text title) {
+		super(title);
+	}
+	
+	@Inject(method = "init()V", at = @At("HEAD"))
 	private void init(CallbackInfo info) {
 		System.out.println("This line is printed by an example mod mixin!");
 	}
+	
 	@Inject(method = "render(IIF)V", at = @At("RETURN"))
-	public void render(int mouseX, int mouseY, float delta, CallbackInfo info) {
+	private void render(int mouseX, int mouseY, float delta, CallbackInfo info) {
 		this.font.draw("Fabric Test Mod", 2, this.height - 30, -1);
 	}
 }
