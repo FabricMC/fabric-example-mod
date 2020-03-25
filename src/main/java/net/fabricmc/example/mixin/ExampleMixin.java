@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
 public abstract class ExampleMixin extends Screen {
-	private MixinTitleScreen(Text title) {
+	private ExampleMixin(Text title) {
 		super(title);
 	}
 	
@@ -20,6 +20,8 @@ public abstract class ExampleMixin extends Screen {
 	
 	@Inject(method = "render(IIF)V", at = @At("RETURN"))
 	private void render(int mouseX, int mouseY, float delta, CallbackInfo info) {
-		this.font.draw("Fabric Test Mod", 2, this.height - 30, -1);
+		// TODO: Maybe implement a mixin.
+		// this.font.draw("Fabric Test Mod", 2, this.height - 30, -1);
+		// https://github.com/SpongePowered/Mixin/wiki
 	}
 }
