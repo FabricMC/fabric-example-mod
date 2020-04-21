@@ -27,3 +27,14 @@ bin/
 # fabric
 
 run/
+
+# mac os
+.DS_Store # Folder Info
+.Trashes # Files to be deleted
+.AppleDouble # File System Fork
+Icon? # Folder icon
+._* # Thumbnail fikes
+.Spotlight-V100 # File System Indexer
+.fseventsd # File System Info
+.TemperoryItems # Temperory Items
+Thumbs.db # Random generated file
