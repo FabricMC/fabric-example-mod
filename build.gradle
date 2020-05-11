@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.2.7-SNAPSHOT'
 	id 'maven-publish'
+	id 'org.jetbrains.gradle.plugin.idea-ext' version '0.7'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -73,5 +74,12 @@ publishing {
 	repositories {
 		// uncomment to publish to the local maven
 		// mavenLocal()
+	}
+}
+
+idea.project.settings {
+	delegateActions {
+		delegateBuildRunToGradle = false
+		testRunner = org.jetbrains.gradle.ext.ActionDelegationConfig.TestRunner.PLATFORM
 	}
 }
