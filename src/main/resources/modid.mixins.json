@@ -4,9 +4,11 @@
   "package": "net.fabricmc.example.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ExampleMixin"
   ],
   "client": [
-    "ExampleMixin"
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1
