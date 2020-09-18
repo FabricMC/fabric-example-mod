@@ -27,3 +27,6 @@ bin/
 # fabric
 
 run/
+
+# OSX
+.DS_Store
