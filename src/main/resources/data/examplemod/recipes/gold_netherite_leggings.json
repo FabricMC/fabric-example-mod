@@ -1,0 +1,13 @@
+{
+  "type": "smithing",
+    "base": {
+      "item": "minecraft:netherite_leggings"
+  },
+    "addition": {
+      "item": "minecraft:gold_block"
+    },
+  "result": {
+    "item": "examplemod:gold_netherite_leggings"
+  }
+}
+

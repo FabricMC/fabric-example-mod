@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "examplemod:block/block_of_charcoal"
+  }
+}
+

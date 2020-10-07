@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": ["minecraft:arrow", "minecraft:ender_eye"],
+
+    "result": {
+      "item": "vt:ender_arrow"
+    }
+  }

@@ -1,0 +1,13 @@
+{
+  "type": "smithing",
+    "base": {
+      "item": "minecraft:diamond_leggings"
+  },
+    "addition": {
+      "item": "minecraft:gold_block"
+    },
+  "result": {
+    "item": "examplemod:gold_diamond_leggings"
+  }
+}
+

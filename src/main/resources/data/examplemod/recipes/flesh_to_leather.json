@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredients": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "result": {
+    "item": "minecraft:leather"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "C"
+  ],
+  "key": {
+    "C": {
+      "item": "examplemod:block_of_charcoal"
+    }
+  },
+  "result": {
+    "item": "minecraft:charcoal",
+    "count": 9
+  }
+}
+
