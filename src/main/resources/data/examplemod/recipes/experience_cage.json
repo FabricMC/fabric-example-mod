@@ -11,7 +11,7 @@
     },
     "B": {
       "item": "minecraft:iron_bars"
-    },
+    }
   },
   "result": {
     "item": "examplemod:experience_cage"

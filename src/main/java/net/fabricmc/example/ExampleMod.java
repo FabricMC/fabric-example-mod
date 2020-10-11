@@ -29,6 +29,10 @@ public class ExampleMod implements ModInitializer {
 	// Implemented by Jerbyl
 	public static final Block BLOCK_OF_CHARCOAL = new Block(FabricBlockSettings.of(Material.STONE).hardness(5.0f));
 
+	// Charcoal block
+	// Implemented by Jerbyl
+	public static final Block EXPERIENCE_CAGE = new Block(FabricBlockSettings.of(Material.STONE).hardness(5.0f));
+
 	// Gold-plated diamond armor items
 	// Implemented by Jerbyl
 	public static final Item GOLD_DIAMOND_HELMET = new ArmorItem(GoldDiamond.GOLD_DIAMOND, EquipmentSlot.HEAD, (new Item.Settings().group(ItemGroup.COMBAT)));

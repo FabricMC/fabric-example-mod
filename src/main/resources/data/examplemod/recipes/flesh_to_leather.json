@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "ingredients": {
+  "ingredient": {
     "item": "minecraft:rotten_flesh"
   },
   "result": {
