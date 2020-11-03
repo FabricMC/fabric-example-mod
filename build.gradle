@@ -38,12 +38,12 @@ tasks.withType(JavaCompile).configureEach {
 	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
 	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
 	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = JavaVersion.VERSION_1_8
+	def targetVersion = 8
 	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion.ordinal() + 1
+		 it.options.release = targetVersion
 	} else {
-		 it.sourceCompatibility = targetVersion
-		 it.targetCompatibility = targetVersion
+		 it.sourceCompatibility = JavaVersion.toVersion(targetVersion)
+		 it.targetCompatibility = JavaVersion.toVersion(targetVersion)
 	}
 }
 
@@ -56,7 +56,7 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.name}"}
+		rename { "${it}_${project.archivesBaseName}"}
 	}
 }
 
@@ -74,19 +74,9 @@ publishing {
 		}
 	}
 
-	// select the repositories you want to publish to
-	// to just publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
+	// Select the repositories you want to publish to
+	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
 	repositories {
-		// An example of a standard Nexus setup, for those wishing to publish their mod artifacts
-		// maven {
-		//	if (project.version.endsWith("-SNAPSHOT")) {
-		//		url = "https://nexus.myorganization.org/repository/maven-snapshots/"
-		//	} else {
-		//		url = "https://nexus.myorganization.org/repository/maven-releases/"
-		//	}
-
-		//	name = "myRepo"
-		//	credentials(PasswordCredentials) // use the ${name}Username and ${name}Password properties for authentication
-		// }
+		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	}
 }
