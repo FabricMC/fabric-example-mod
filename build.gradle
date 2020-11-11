@@ -3,6 +3,9 @@ plugins {
 	id 'maven-publish'
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
@@ -41,9 +44,6 @@ tasks.withType(JavaCompile).configureEach {
 	def targetVersion = 8
 	if (JavaVersion.current().isJava9Compatible()) {
 		 it.options.release = targetVersion
-	} else {
-		 it.sourceCompatibility = JavaVersion.toVersion(targetVersion)
-		 it.targetCompatibility = JavaVersion.toVersion(targetVersion)
 	}
 }
 
