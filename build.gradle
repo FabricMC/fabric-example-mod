@@ -11,7 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    // Add repositories to retrive artifacts from in here.
+    // Add repositories to retrieve artifacts from in here.
     // Loom adds the Fabric maven automatically so you don't
     // have to. See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
