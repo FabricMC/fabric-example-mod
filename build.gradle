@@ -86,6 +86,6 @@ publishing {
         // Add repositories to publish to here.
         // Notice: This block does NOT have the same function as the block in line 13.
         // The repositories here will be used for publishing your artifact, not for
-        // retirieving dependencies.
+        // retrieving dependencies.
     }
 }
