@@ -3,9 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
@@ -26,6 +23,9 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	// You can also use individual Fabric API modules with
+	// `modImplementation fabricApi.module('module-name', project.fabric_version)`
+	// If you do this, you will need to depend individually on each modules in the fabric.mod.json file.
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
@@ -45,17 +45,15 @@ tasks.withType(JavaCompile).configureEach {
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
-
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
 }
 
 java {
+	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
+	// This ensures that no newer classes, methods, or language features are used.
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
