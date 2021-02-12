@@ -7,6 +7,8 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+def targetJavaVersion = 8
+
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
@@ -45,14 +47,18 @@ tasks.withType(JavaCompile).configureEach {
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
+
+	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
+	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
+	// We'll use that if it's available, but otherwise we'll use the older option.
+	if (JavaVersion.current().isJava9Compatible()) {
+		it.options.release = targetJavaVersion
+	}
 }
 
 java {
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// This ensures that no newer classes, methods, or language features are used.
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(8)
-	}
+	sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
+	targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
 
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
