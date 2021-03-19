@@ -3,9 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
@@ -45,14 +42,6 @@ tasks.withType(JavaCompile).configureEach {
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
-
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
 }
 
 java {
@@ -60,6 +49,14 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+
+	// Make sure the mod is built with Java 8, behaves a little differenty than just defining the targeted version.
+	// This will also download a Java 8 JDK if the user does not have one installed.
+	// For some reason the runClient/runServer tasks still use the Gradle daemon install, so that isn't going to be
+	// a problem.
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
 }
 
 jar {
