@@ -12,7 +12,7 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          1.8,  # Minimum supported by Minecraft
+          8.0,  # Minimum supported by Minecraft
           11,   # Current Java LTS
           16    # Latest version
         ]
