@@ -63,41 +63,33 @@ tasks {
 		}
 	}
 
-	java {
-		// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-		// if it is present.
-		// If you remove this line, sources will not be generated.
-		withSourcesJar()
-	}
-
 	jar {
 		from("LICENSE") {
 			rename { "${it}_${archives_base_name}" }
 		}
 	}
-}
 
-/*
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				dependsOn(remapJar)
-			}
-			artifact(sourcesJar) {
-				dependsOn(remapSourcesJar)
+	val sourcesJar by creating(Jar::class) {
+		dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+		archiveClassifier.convention("sources")
+		from(sourceSets["main"].allSource)
+	}
+
+	publishing {
+		publications {
+			create<MavenPublication>("maven") {
+				// add all the jars that should be included when publishing to maven
+				artifact(remapJar.get())
+				artifact(sourcesJar)
 			}
 		}
-	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+		repositories {
+			// Add repositories to publish to here.
+			// Notice: This block does NOT have the same function as the block in the top level.
+			// The repositories here will be used for publishing your artifact, not for
+			// retrieving dependencies.
+		}
 	}
 }
- */
