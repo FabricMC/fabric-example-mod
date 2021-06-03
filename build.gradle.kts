@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") version "0.7-SNAPSHOT"
-	id("maven-publish")
+	`maven-publish`
 }
 
 val sourceCompatibility = JavaVersion.VERSION_1_8
