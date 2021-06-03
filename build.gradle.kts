@@ -70,7 +70,7 @@ tasks {
 	}
 
 	val sourcesJar by creating(Jar::class) {
-		dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+		dependsOn(classes)
 		archiveClassifier.convention("sources")
 		from(sourceSets["main"].allSource)
 	}
