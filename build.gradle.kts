@@ -59,7 +59,7 @@ tasks {
 		inputs.property("version",  project.version)
 
 		filesMatching("fabric.mod.json") {
-			this.expand(Pair("version", project.version))
+			this.expand("version" to project.version)
 		}
 	}
 
