@@ -7,8 +7,18 @@ sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
 group = project.maven_group
+
+// Obtains mod version. change file reference if your fabric.mod.json is located elsewhere
+import groovy.json.JsonSlurper
+version = new JsonSlurper().parse(file('src/main/resources/fabric.mod.json')).version
+
+// You can use logger.lifecycle to print out messages like System.out; double-quote strings convert
+// ${statement} templates to statement values, such as method calls, while single-quote strings don't.
+// getXxx() calls can be simplified to xxx, like project.getGradle().getGradleVersion() is project.gradle.gradleVersion.
+// Since the buildscript is provided with a project, you can call project methods without qualification if there is no
+// ambiguity, such as file() call to retrieve version is project.file(), and gradle is project.getGradle()
+logger.lifecycle "Setting up ${archivesBaseName} ${version} with Gradle ${gradle.gradleVersion}"
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -26,17 +36,6 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
-}
-
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
 }
 
 tasks.withType(JavaCompile).configureEach {
