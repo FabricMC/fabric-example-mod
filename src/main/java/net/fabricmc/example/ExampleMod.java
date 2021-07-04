@@ -2,7 +2,7 @@ package net.fabricmc.example;
 
 import net.fabricmc.api.ModInitializer;
 
-public class ExampleMod implements ModInitializer, ClientModInitializer {
+public class ExampleMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -10,14 +10,5 @@ public class ExampleMod implements ModInitializer, ClientModInitializer {
 		// Proceed with mild caution.
 
 		System.out.println("Hello Fabric world!");
-	}
-	
-	@Override
-	public void onInitializeClient() {
-		// This code runs on the client side only, and should be used to set up
-		// client-side logic, such as render or integrated-server tweaks.
-		// Proceed with mild caution.
-		
-		System.out.println("Hello client world!");
 	}
 }
