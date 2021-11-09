@@ -12,10 +12,11 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          16    # Minimum supported by Minecraft
+          16,    # Minimum supported by Minecraft
+          17,    # Current Java LTS
         ]
         # and run on both Linux and Windows
-        os: [ubuntu-20.04, windows-latest]
+        os: [ubuntu-20.04, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout repository
@@ -32,7 +33,7 @@ jobs:
       - name: build
         run: ./gradlew build
       - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '16' }} # Only upload artifacts built from latest java on one OS
+        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
