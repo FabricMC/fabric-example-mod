@@ -50,6 +50,11 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 16
 }
 
+tasks.withType(AbstractCopyTask).configureEach {
+	// ensures processResources uses UTF-8 instead of the system default encoding
+	it.filteringCharset = "UTF-8"
+}
+
 java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
