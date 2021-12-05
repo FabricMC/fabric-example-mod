@@ -1,3 +1,5 @@
+[![build](https://github.com/antonilol/fabric-example-mod/actions/workflows/push.yml/badge.svg)](https://github.com/antonilol/fabric-example-mod/actions/workflows/push.yml)
+
 # Fabric Example Mod
 
 ## Setup
