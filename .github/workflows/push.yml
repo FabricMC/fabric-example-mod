@@ -1,6 +1,6 @@
 # Automatically build the project and run any configured tests for every push
 # and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
+# certain platforms or Java versions, and provides a first line of defense
 # against bad commits.
 
 name: build
