@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "tutorialmod",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "Tutorial Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "Ian Cooper"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -19,11 +19,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.ianCooper.tutorialmod.TutorialMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "tutorialmod.mixins.json"
   ],
 
   "depends": {
