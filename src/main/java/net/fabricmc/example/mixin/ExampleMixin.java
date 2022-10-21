@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // In theory, you can use Kotlin mixin classes, but it is untested and might be unstable.
 // But you can call and use Kotlin functions, objects from Mixin without any issues.
+// https://github.com/SpongePowered/Mixin/issues/245 for details
 @Mixin(TitleScreen.class)
 public class ExampleMixin {
 	@Inject(at = @At("HEAD"), method = "init()V")
