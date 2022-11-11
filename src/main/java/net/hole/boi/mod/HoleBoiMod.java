@@ -11,8 +11,17 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 public class HoleBoiMod implements ModInitializer{
+    /**
+     * Determines whether the mod will scroll
+     * away from the held tool when at 1 durability
+     */
     public Boolean SCROLLAWAY = false;
+    /**
+     * Determines whether to send a message & sound when
+     * tool is at less than 10% durability
+     */
     public Boolean DURANOISE = true;
+    public final String MODPREFIX = "§3[HB]§r ";
 
     
     @Override
@@ -24,17 +33,17 @@ public class HoleBoiMod implements ModInitializer{
                 int currentDura = player.getMainHandStack().getDamage();
                 int dura = maxDura-currentDura;
                 String item = player.getMainHandStack().toString();
-                Boolean isEmptyHand = item.equals("1 air");
+                Boolean isEmptyHand = item.equals("1 air") || item.equals("0 air");
                 //player.sendMessage(Text.literal(item));
                 //player.sendMessage(Text.literal(String.valueOf(currentDura) + "/" + String.valueOf(maxDura)));
-                if (dura == 1 & !isEmptyHand ) {
-                    player.playSound(SoundEvents.ENTITY_ARROW_HIT_PLAYER, 0.5F, 1.0F);
-                    player.sendMessage(Text.literal("§3[HB]§r §l§cAutomatically swapped away from tool with 1 durability"));
+                if (dura == 1 && !isEmptyHand ) {
+                    player.playSound(SoundEvents.ENTITY_ARROW_HIT_PLAYER, 0.7F, 1.0F);
+                    player.sendMessage(Text.literal(MODPREFIX + "§l§cAutomatically swapped away from tool with 1 durability"));
                     player.getInventory().scrollInHotbar(0.5);
                 }
                 else if (dura < maxDura*0.1 && !isEmptyHand) {
                     player.playSound(SoundEvents.BLOCK_ANVIL_LAND, 0.5F, 1.0F);
-                    player.sendMessage(Text.literal("§3[HB]§r §cThe tool you are using has low durability!!"));
+                    player.sendMessage(Text.literal(MODPREFIX + "§cThe tool you are using has low durability!!"));
                     if (SCROLLAWAY) {
                         player.getInventory().scrollInHotbar(0.5);
                     }
@@ -69,7 +78,7 @@ public class HoleBoiMod implements ModInitializer{
                         state = "on";
                         SCROLLAWAY = true;
                     }
-                    context.getSource().getPlayer().sendMessage(Text.literal("§3[HB]§r Low Durability scrolling is now §c§l" + state));
+                    context.getSource().getPlayer().sendMessage(Text.literal(MODPREFIX + "Low Durability scrolling is now §c§l" + state));
                     return 1;
                 }))
             .then(literal("scrollstate")
@@ -82,7 +91,7 @@ public class HoleBoiMod implements ModInitializer{
                         state = "off";
                     }
 
-                    context.getSource().getPlayer().sendMessage(Text.literal("§3[HB]§r Low Durability scrolling is §c§l" + state));
+                    context.getSource().getPlayer().sendMessage(Text.literal(MODPREFIX + "Low Durability scrolling is §c§l" + state));
                     return 1;
                 }))
             .then(literal("togglenoise")
@@ -96,7 +105,7 @@ public class HoleBoiMod implements ModInitializer{
                         state = "on";
                         DURANOISE = true;
                     }
-                    context.getSource().getPlayer().sendMessage(Text.literal("§3[HB]§r Durability Message is now §c§l" + state));
+                    context.getSource().getPlayer().sendMessage(Text.literal(MODPREFIX + "Durability Message is now §c§l" + state));
                     return 1;
                 }))
             .then(literal("noisestate")
@@ -109,7 +118,7 @@ public class HoleBoiMod implements ModInitializer{
                         state = "off";
                     }
 
-                    context.getSource().getPlayer().sendMessage(Text.literal("§3[HB]§r Durability Message is §c§l" + state));
+                    context.getSource().getPlayer().sendMessage(Text.literal(MODPREFIX + "Durability Message is §c§l" + state));
                     return 1;
                 }))
             .then(literal("mumbos")
@@ -130,7 +139,7 @@ public class HoleBoiMod implements ModInitializer{
                             mumbos += " ";
                         }
 
-                        player.sendMessage(Text.literal("§3[HB]§r " + mumbos));
+                        player.sendMessage(Text.literal(MODPREFIX + mumbos));
                         return 1;
 
                     }))
