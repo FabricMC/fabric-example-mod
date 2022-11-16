@@ -34,7 +34,7 @@ public class HoleBoiMod implements ModInitializer{
     /**
      * Contains list of holebois
      */
-    //public List<String> holebois = Arrays.asList(new String[]{"deceiverW","Kroojel","eeveevy","JustPrez","bk____","Galiano"});
+    public final List<String> holebois = Arrays.asList(new String[]{"deceiverW","Kroojel","eeveevy","JustPrez","bk____","Galiano"});
     
 
     /**
@@ -214,7 +214,6 @@ public class HoleBoiMod implements ModInitializer{
 
 
                         ClientPlayerEntity player = context.getSource().getPlayer();
-                        List<String> holebois = Arrays.asList(new String[]{"deceiverW","Kroojel","eeveevy","JustPrez","bk____","Galiano","Player476"});
                         
                         String commandUser = fixLiteralString(player.getName().toString());
                         ClientWorld world = context.getSource().getWorld();
