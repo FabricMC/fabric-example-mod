@@ -2,11 +2,16 @@ package net.hole.boi.mod;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+
+import java.util.*;
+
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -21,7 +26,29 @@ public class HoleBoiMod implements ModInitializer{
      * tool is at less than 10% durability
      */
     public Boolean DURANOISE = true;
+    /**
+     * The Prefix to be prepended to all command feedback
+     */
     public final String MODPREFIX = "§3[HB]§r ";
+    
+    /**
+     * Contains list of holebois
+     */
+    //public List<String> holebois = Arrays.asList(new String[]{"deceiverW","Kroojel","eeveevy","JustPrez","bk____","Galiano"});
+    
+
+    /**
+     * Fixes Strings resulting from the method AbstractClientPlayerEntity.getName().toString()
+     * @param String "literal{name}"
+     * @return Fixed String
+     * @see net.minecraft.client.network.AbstractClientPlayerEntity#getName()
+     */
+    public String fixLiteralString(String brokeString) {
+        String y = brokeString.substring(8, brokeString.length()-1);
+        return y;
+
+    }
+
 
     
     @Override
@@ -165,17 +192,57 @@ public class HoleBoiMod implements ModInitializer{
 
                     }))
             )
-            /* .then(literal("thres")
-                .then(argument("threshold", integer(0))
+            
+            .then(literal("msg")
+                .then(argument("message", StringArgumentType.string())
                     .executes(context -> {
-                        Integer x = getInteger(context, "threshold");
-                        //context.getSource().getPlayer().sendMessage(Text.literal(String.valueOf(x)));
+                        /*
+                         * GOAL: Send a message to every online holeboi 
+                         * 
+                         * TOOLS:
+                         *  - Can send commands with `player.sendCommand(<string>)`
+                         *  - Can get all online players with `world.getPlayers()`
+                         * 
+                         * PROCESS:
+                         *  - Have Some list of Whitelisted users
+                         *  - Loop through list of players 
+                         *      - If player name matches an item in the list add it to new list
+                         *  - Loop through list of online players 
+                         *      - Send message to each one
+                         * 
+                         */
+
+
                         ClientPlayerEntity player = context.getSource().getPlayer();
-                        player.dropSelectedItem(true);
+                        List<String> holebois = Arrays.asList(new String[]{"deceiverW","Kroojel","eeveevy","JustPrez","bk____","Galiano","Player476"});
+                        
+                        String commandUser = fixLiteralString(player.getName().toString());
+                        ClientWorld world = context.getSource().getWorld();
+                        List<String> OnlineHB = new ArrayList<>();
+                        String message = StringArgumentType.getString(context, "message");
+                        
+                        
+                        List<AbstractClientPlayerEntity> playerlist = world.getPlayers();
+                        for (AbstractClientPlayerEntity x : playerlist) {
+                            String playerName = fixLiteralString(x.getName().toString());
+                            for (String y : holebois) {
+                                if (playerName.equals(y)  && !playerName.equals(commandUser) ) {
+                                    OnlineHB.add(y);
+                                }
+                            }
+                        }
+                        if (OnlineHB.size() == 0) {
+                            player.sendMessage(Text.literal(MODPREFIX + "§cThere are no other members of HB online!"));
+                        }
+                        else {
+                            for (String x : OnlineHB) {
+                                player.sendCommand("msg " + x + " " + message);
+                            } 
+                        }
                         return 1;
                     })
                 )
-            ) */
+            )
         ));
     }
 
