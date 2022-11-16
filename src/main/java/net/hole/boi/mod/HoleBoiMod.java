@@ -216,16 +216,15 @@ public class HoleBoiMod implements ModInitializer{
                         ClientPlayerEntity player = context.getSource().getPlayer();
                         
                         String commandUser = fixLiteralString(player.getName().toString());
-                        ClientWorld world = context.getSource().getWorld();
+                        Collection<String> playerlist = context.getSource().getPlayerNames();
                         List<String> OnlineHB = new ArrayList<>();
                         String message = StringArgumentType.getString(context, "message");
                         
                         
-                        List<AbstractClientPlayerEntity> playerlist = world.getPlayers();
-                        for (AbstractClientPlayerEntity x : playerlist) {
-                            String playerName = fixLiteralString(x.getName().toString());
+                        System.out.println(playerlist);
+                        for (String x : playerlist) {
                             for (String y : holebois) {
-                                if (playerName.equals(y) && !playerName.equals(commandUser) ) {
+                                if (x.equals(y) && !x.equals(commandUser) ) {
                                     OnlineHB.add(y);
                                 }
                             }
@@ -235,7 +234,7 @@ public class HoleBoiMod implements ModInitializer{
                         }
                         else {
                             for (String x : OnlineHB) {
-                                player.sendCommand("msg " + x + " HB>>" + message);
+                                player.sendCommand("msg " + x + " HB>> " + message);
                             } 
                         }
                         return 1;
