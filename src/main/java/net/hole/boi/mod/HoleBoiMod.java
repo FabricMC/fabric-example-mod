@@ -225,7 +225,7 @@ public class HoleBoiMod implements ModInitializer{
                         for (AbstractClientPlayerEntity x : playerlist) {
                             String playerName = fixLiteralString(x.getName().toString());
                             for (String y : holebois) {
-                                if (playerName.equals(y)  && !playerName.equals(commandUser) ) {
+                                if (playerName.equals(y) && !playerName.equals(commandUser) ) {
                                     OnlineHB.add(y);
                                 }
                             }
@@ -235,7 +235,7 @@ public class HoleBoiMod implements ModInitializer{
                         }
                         else {
                             for (String x : OnlineHB) {
-                                player.sendCommand("msg " + x + " " + message);
+                                player.sendCommand("msg " + x + " HB>>" + message);
                             } 
                         }
                         return 1;
