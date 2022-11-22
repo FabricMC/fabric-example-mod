@@ -19,7 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      {
+        "adapter": "kotlin",
+        "value": "net.fabricmc.example.ExampleModKt::onInitialize"
+      }
     ]
   },
   "mixins": [
@@ -29,6 +32,7 @@
   "depends": {
     "fabricloader": ">=0.14.10",
     "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.8.5+kotlin.1.7.20",
     "minecraft": "~1.19",
     "java": ">=17"
   },
