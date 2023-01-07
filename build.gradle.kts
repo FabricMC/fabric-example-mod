@@ -8,6 +8,9 @@ base.archivesName.set(project.properties["archives_base_name"] as String)
 version = project.properties["mod_version"] as String
 group = project.properties["maven_group"] as String
 
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
+
 repositories {
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -25,7 +28,6 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.properties["fabric_version"]}")
 	modImplementation("net.fabricmc:fabric-language-kotlin:${project.properties["fabric_kotlin_version"]}")
-
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
@@ -35,27 +37,21 @@ dependencies {
 tasks {
 	processResources {
 		inputs.property("version", project.version)
-		filteringCharset = "UTF-8"
 
 		filesMatching("fabric.mod.json") {
-			expand(mapOf("version" to project.version))
+			expand("version" to project.version)
 		}
 	}
 
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	val targetJavaVersion = 17
 	withType<JavaCompile> {
-		options.encoding = "UTF-8"
-		options.release.set(targetJavaVersion)
+		options.release.set(java.targetCompatibility.majorVersion.toInt())
 	}
 
 	withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-		kotlinOptions.jvmTarget = targetJavaVersion.toString()
+		kotlinOptions.jvmTarget = java.targetCompatibility.toString()
 	}
 
 	java {
-		toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
-
 		// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 		// if it is present.
 		// If you remove this line, sources will not be generated.
@@ -64,7 +60,7 @@ tasks {
 
 	jar {
 		from("LICENSE") {
-			rename { "${it}_${base.archivesName}" }
+			rename { "${it}_${base.archivesName.get()}" }
 		}
 	}
 }
