@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") version "1.1-SNAPSHOT"
-	kotlin("jvm") version "1.7.21"
+	kotlin("jvm") version "1.8.10"
 	id("maven-publish")
 }
 
@@ -10,6 +10,9 @@ java.targetCompatibility = JavaVersion.VERSION_17
 base.archivesName.set(project.properties["archives_base_name"] as String)
 version = project.properties["mod_version"] as String
 group = project.properties["maven_group"] as String
+
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -28,7 +31,6 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.properties["fabric_version"]}")
 	modImplementation("net.fabricmc:fabric-language-kotlin:${project.properties["fabric_kotlin_version"]}")
-
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
@@ -40,11 +42,10 @@ tasks {
 		inputs.property("version", project.version)
 
 		filesMatching("fabric.mod.json") {
-			expand(mapOf("version" to project.version))
+			expand("version" to project.version)
 		}
 	}
 
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	withType<JavaCompile> {
 		options.release.set(java.targetCompatibility.majorVersion.toInt())
 	}
@@ -62,7 +63,7 @@ tasks {
 
 	jar {
 		from("LICENSE") {
-			rename { "${it}_${base.archivesName}" }
+			rename { "${it}_${base.archivesName.get()}" }
 		}
 	}
 }
