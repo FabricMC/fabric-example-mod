@@ -4,6 +4,9 @@ plugins {
 	id("maven-publish")
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
+
 base.archivesName.set(project.properties["archives_base_name"] as String)
 version = project.properties["mod_version"] as String
 group = project.properties["maven_group"] as String
@@ -35,7 +38,6 @@ dependencies {
 tasks {
 	processResources {
 		inputs.property("version", project.version)
-		filteringCharset = "UTF-8"
 
 		filesMatching("fabric.mod.json") {
 			expand(mapOf("version" to project.version))
@@ -43,19 +45,15 @@ tasks {
 	}
 
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	val targetJavaVersion = 17
 	withType<JavaCompile> {
-		options.encoding = "UTF-8"
-		options.release.set(targetJavaVersion)
+		options.release.set(java.targetCompatibility.majorVersion.toInt())
 	}
 
 	withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-		kotlinOptions.jvmTarget = targetJavaVersion.toString()
+		kotlinOptions.jvmTarget = java.targetCompatibility.toString()
 	}
 
 	java {
-		toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
-
 		// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 		// if it is present.
 		// If you remove this line, sources will not be generated.
