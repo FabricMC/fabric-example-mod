@@ -1,8 +1,11 @@
 plugins {
-	id("fabric-loom") version "1.0-SNAPSHOT"
-	kotlin("jvm") version "1.8.0"
+	id("fabric-loom") version "1.1-SNAPSHOT"
+	kotlin("jvm") version "1.8.10"
 	id("maven-publish")
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 base.archivesName.set(project.properties["archives_base_name"] as String)
 version = project.properties["mod_version"] as String
