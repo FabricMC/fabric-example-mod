@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") version "1.1-SNAPSHOT"
-	kotlin("jvm") version "1.8.10"
+	kotlin("jvm") version "1.8.20"
 	id("maven-publish")
 }
 
@@ -50,10 +50,6 @@ tasks {
 		options.release.set(java.targetCompatibility.majorVersion.toInt())
 	}
 
-	withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-		kotlinOptions.jvmTarget = java.targetCompatibility.toString()
-	}
-
 	java {
 		// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 		// if it is present.
@@ -66,6 +62,10 @@ tasks {
 			rename { "${it}_${base.archivesName.get()}" }
 		}
 	}
+}
+
+kotlin {
+	jvmToolchain(java.targetCompatibility.majorVersion.toInt())
 }
 
 // configure the maven publication

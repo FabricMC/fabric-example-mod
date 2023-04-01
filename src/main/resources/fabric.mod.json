@@ -30,10 +30,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.14",
+    "fabricloader": ">=0.14.17",
     "fabric-api": "*",
-    "fabric-language-kotlin": ">=1.8.7+kotlin.1.7.22",
-    "minecraft": "~1.19.3",
+    "fabric-language-kotlin": ">=1.9.3+kotlin.1.8.20",
+    "minecraft": "~1.19.4",
     "java": ">=17"
   },
   "suggests": {
