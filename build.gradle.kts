@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") version "1.2-SNAPSHOT"
-	kotlin("jvm") version "1.8.21"
+	kotlin("jvm") version "1.8.22"
 	id("maven-publish")
 }
 
@@ -17,6 +17,17 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		create("modid") {
+			sourceSet(sourceSets["main"])
+			sourceSet(sourceSets["client"])
+		}
+	}
 }
 
 dependencies {

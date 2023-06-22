@@ -1,42 +1,48 @@
 {
-  "schemaVersion": 1,
-  "id": "modid",
-  "version": "${version}",
-
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
-  "authors": [
-    "Me!"
-  ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
-
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      {
-        "adapter": "kotlin",
-        "value": "net.fabricmc.example.ExampleModKt::onInitialize"
-      }
-    ]
-  },
-  "mixins": [
-    "modid.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.14.19",
-    "fabric-api": "*",
-    "fabric-language-kotlin": ">=1.9.3+kotlin.1.8.20",
-    "minecraft": "~1.19.4",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
-  }
+	"schemaVersion": 1,
+	"id": "modid",
+	"version": "${version}",
+	"name": "Example mod",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"adapter": "kotlin",
+				"value": "com.example.ExampleMod"
+			}
+		],
+		"client": [
+			{
+				"adapter": "kotlin",
+				"value": "com.example.ExampleModClient"
+			}
+		]
+	},
+	"mixins": [
+		"modid.mixins.json",
+		{
+			"config": "modid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": ">=1.9.5+kotlin.1.8.22"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }
