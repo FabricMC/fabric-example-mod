@@ -16,10 +16,16 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			{
+				"adapter": "kotlin",
+				"value": "com.example.ExampleMod"
+			}
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			{
+				"adapter": "kotlin",
+				"value": "com.example.ExampleModClient"
+			}
 		]
 	},
 	"mixins": [
@@ -33,7 +39,8 @@
 		"fabricloader": ">=0.14.21",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"fabric-language-kotlin": ">=1.9.5+kotlin.1.8.22"
 	},
 	"suggests": {
 		"another-mod": "*"
