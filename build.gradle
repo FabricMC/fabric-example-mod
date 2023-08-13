@@ -22,12 +22,13 @@ loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"modid" {
+		"fishingbell" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
 	}
 
+	accessWidenerPath = file("src/main/resources/fishingbell.accesswidener")
 }
 
 dependencies {
