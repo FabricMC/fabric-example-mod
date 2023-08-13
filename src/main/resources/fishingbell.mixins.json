@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "com.example.mixin",
+	"package": "com.fishingbell.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"FishingBobberEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

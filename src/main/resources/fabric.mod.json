@@ -1,29 +1,26 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "fishingbell",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Fishing Bell",
+	"description": "Hear a bell ring when your fishing rod catches something and you have a bell in your offhand!",
 	"authors": [
-		"Me!"
+		"LilTOJustice"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/fishingbell/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
-		],
-		"client": [
-			"com.example.ExampleModClient"
+			"com.fishingbell.FishingBell"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"fishingbell.mixins.json",
 		{
 			"config": "modid.client.mixins.json",
 			"environment": "client"
@@ -37,5 +34,8 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"accesswidener": {
+		"accesswidener" : "fishingbell.accesswidener"
 	}
 }
