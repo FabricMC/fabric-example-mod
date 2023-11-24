@@ -1,92 +1,80 @@
 package com.example;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-// Import statements for necessary Minecraft and Fabric classes
-// https://github.com/Tutorials-By-Kaupenjoe/Fabric-Tutorial-1.19/blob/main/src/main/java/net/kaupenjoe/tutorialmod/item/ModItems.java
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterials;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.text.LiteralText;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
-// Main class of the mod, implementing ModInitializer for initialization logic
 public class ExampleMod implements ModInitializer {
-	@Override
-	public void onInitialize() {
-		// Registering an event listener for AFTER_RESPAWN event to handle player deaths
-		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-			handlePlayerDeath(oldPlayer, newPlayer);
-		});
-	}
+    @Override
+    public void onInitialize() {
+        // Registering an event listener for AFTER_RESPAWN event to handle player deaths
+        // This event is triggered in real-time when a player respawns after dying
+        ServerPlayerEvents.AFTER_RESPAWN.register(this::handlePlayerDeath);
 
-	// Method to handle logic when a player dies
-	private void handlePlayerDeath(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer) {
-		// Getting the last damage source, which could be another player
-		DamageSource source = oldPlayer.getRecentDamageSource();
-		// Checking if the damage source is a player
-		if (source != null && source.getAttacker() instanceof PlayerEntity) {
-			PlayerEntity killer = (PlayerEntity) source.getAttacker();
-			// Upgrading the killer's armor
-			upgradeArmor(killer);
-		}
+        // Registering a command "/upgradearmor" that can be executed in real-time during the game
+        // This command allows players with the right permissions to upgrade their armor instantly
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+            dispatcher.register(CommandManager.literal("upgradearmor")
+                .requires(source -> source.hasPermissionLevel(2)) // Command requires the player to have OP level 2
+                .executes(context -> {
+                    // Executing the command to upgrade armor
+                    if (context.getSource().getEntity() instanceof PlayerEntity) {
+                        PlayerEntity player = (PlayerEntity) context.getSource().getEntity();
+                        upgradeArmor(player); // Upgrading the player's armor
+                        context.getSource().sendFeedback(new LiteralText("Armor upgraded to Netherite!"), false);
+                    }
+                    return 1; // Command executed successfully
+                }));
+        });
+    }
 
-		// Clearing the dead player's armor inventory to prevent it from dropping
-		oldPlayer.getInventory().armor.clear();
-	}
+    private void handlePlayerDeath(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
+        // This method is triggered when a player dies and respawns
+        // It handles the logic of what happens after a player's death in real-time
+        DamageSource source = oldPlayer.getRecentDamageSource();
+        if (source != null && source.getAttacker() instanceof PlayerEntity) {
+            PlayerEntity killer = (PlayerEntity) source.getAttacker();
+            upgradeArmor(killer); // Upgrading the killer's armor
+        }
+        oldPlayer.getInventory().armor.clear(); // Clearing the dead player's armor to prevent dropping
+    }
 
-	// Method to upgrade a player's armor
-	private void upgradeArmor(PlayerEntity player) {
-		// Iterating through the player's armor slots
-		for (int i = 0; i < player.getInventory().armor.size(); i++) {
-			ItemStack itemStack = player.getInventory().armor.get(i);
+    private void upgradeArmor(PlayerEntity player) {
+        // This method upgrades the player's armor to Netherite in real-time
+        // It's called when the command is executed or after killing another player
+        player.getInventory().armor.forEach(itemStack -> {
+            if (!(itemStack.getItem() instanceof ArmorItem)) return; // Skip if not an armor item
+            ArmorItem armorItem = (ArmorItem) itemStack.getItem();
+            if (armorItem.getMaterial() != ArmorMaterials.DIAMOND) return; // Skip if not diamond material
 
-			// Checking if the item in the slot is an instance of ArmorItem
-			if (itemStack.getItem() instanceof ArmorItem) {
-				ArmorItem armorItem = (ArmorItem) itemStack.getItem();
-				ArmorMaterials material = (ArmorMaterials) armorItem.getMaterial();
+            ItemStack netheriteArmor = new ItemStack(getNetheriteCounterpart(itemStack.getItem()));
+            netheriteArmor.setEnchantments(itemStack.getEnchantments()); // Copy enchantments
+            netheriteArmor.setDamage(itemStack.getDamage()); // Copy damage value
 
-				// Checking if the armor material is DIAMOND
-				if (material == ArmorMaterials.DIAMOND) {
-					// Upgrading the armor item to Netherite
-					ItemStack upgradedItem = upgradeToNetherite(itemStack);
-					// Setting the upgraded item back in the armor slot
-					player.getInventory().armor.set(i, upgradedItem);
-				}
-			}
-		}
-	}
+            itemStack.setCount(0); // Remove the old diamond armor
+            player.getInventory().armor.set(player.getInventory().armor.indexOf(itemStack), netheriteArmor); // Replace with Netherite armor
+        });
+    }
 
-	// Method to upgrade a diamond armor piece to a Netherite armor piece
-	private ItemStack upgradeToNetherite(ItemStack itemStack) {
-		// Creating a new ItemStack for the Netherite armor piece
-		ItemStack netheriteArmor = new ItemStack(
-				switch (itemStack.getItem()) {
-					// Mapping each diamond armor piece to its Netherite counterpart
-					case Items.DIAMOND_HELMET -> Items.NETHERITE_HELMET;
-					case Items.DIAMOND_CHESTPLATE -> Items.NETHERITE_CHESTPLATE;
-					case Items.DIAMOND_LEGGINGS -> Items.NETHERITE_LEGGINGS;
-					case Items.DIAMOND_BOOTS -> Items.NETHERITE_BOOTS;
-					default -> itemStack.getItem(); // Default case to handle unexpected items
-				});
-
-		// Copying the enchantments from the old armor to the new armor
-		netheriteArmor.setEnchantments(itemStack.getEnchantments());
-		// Copying the damage value from the old armor to the new armor
-		netheriteArmor.setDamage(itemStack.getDamage());
-
-		// Optionally, adding additional enchantments to the new armor
-		netheriteArmor.addEnchantment(Enchantments.PROTECTION, 4);
-
-		// Returning the new, upgraded Netherite armor item
-		return netheriteArmor;
-	}
+    private Item getNetheriteCounterpart(Item item) {
+        // This method returns the Netherite counterpart of a diamond armor item
+        // It's used to map each diamond armor piece to its corresponding Netherite piece
+        return switch (item) {
+            case Items.DIAMOND_HELMET -> Items.NETHERITE_HELMET;
+            case Items.DIAMOND_CHESTPLATE -> Items.NETHERITE_CHESTPLATE;
+            case Items.DIAMOND_LEGGINGS -> Items.NETHERITE_LEGGINGS;
+            case Items.DIAMOND_BOOTS -> Items.NETHERITE_BOOTS;
+            default -> item; // Return the item itself if it's not a diamond armor piece
+        };
+    }
 }
