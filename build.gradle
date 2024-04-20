@@ -22,8 +22,8 @@ loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"modid" {
-			sourceSet sourceSets.main
+		"truesight" {
+			// sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
 	}

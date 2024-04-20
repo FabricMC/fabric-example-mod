@@ -1,0 +1,5 @@
+{
+    "truesight.debug.help": "F3 + M = Force render invisible entities",
+    "truesight.on": "Invisible entities: shown",
+    "truesight.off": "Invisible entities: hidden"
+}

@@ -1,0 +1,27 @@
+{
+    "schemaVersion": 1,
+    "id": "truesight",
+    "version": "1.1.1",
+    "name": "True Sight",
+    "description": "Force invisible entities to render with F3 + M.",
+    "authors": [
+        "Roundaround",
+        "Cootshk"
+    ],
+    "contact": {
+        "homepage": "https://modrinth.com/mod/true-sight",
+        "sources": "https://github.com/Cootshk/truesight",
+        "issues": "https://github.com/Cootshk/truesight/issues"
+    },
+    "license": "MIT",
+    "icon": "assets/icon.png",
+    "environment": "client",
+    "mixins": [
+        "truesight.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.15.10",
+        "minecraft": "1.20.*",
+        "java": ">=17"
+    }
+}
