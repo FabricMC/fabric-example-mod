@@ -12,7 +12,6 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          17,    # Current Java LTS & minimum supported by Minecraft
           21,    # Current Java LTS
         ]
     runs-on: ubuntu-22.04
