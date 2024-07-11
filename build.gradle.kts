@@ -1,13 +1,23 @@
+import org.gradle.jvm.tasks.Jar
+
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
-	id 'maven-publish'
+	id("fabric-loom") version "1.7-SNAPSHOT"
+	id("maven-publish")
 }
 
-version = project.mod_version
-group = project.maven_group
+val mod_version: String by project
+val maven_group: String by project
+val archives_base_name: String by project
+val minecraft_version: String by project
+val yarn_mappings: String by project
+val loader_version: String by project
+
+
+version = mod_version
+group = maven_group
 
 base {
-	archivesName = project.archives_base_name
+	archivesName.set(archives_base_name)
 }
 
 repositories {
@@ -21,36 +31,34 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
-	mods {
-		"modid" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
+	mods.create("modid") {
+		sourceSet(sourceSets["main"])
+		sourceSet(sourceSets["client"])
 	}
 
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft("com.mojang:minecraft:${minecraft_version}")
+	mappings("net.fabricmc:yarn:${yarn_mappings}:v2")
+	modImplementation("net.fabricmc:fabric-loader:${loader_version}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${findProperty("fabric_version")}")
 	
 }
 
-processResources {
-	inputs.property "version", project.version
+tasks.getting(ProcessResources::class) {
+	inputs.property("version", project.version)
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    	expand(mapOf(Pair("version", project.version)))
+  	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+tasks.withType<JavaCompile>().configureEach {
+	options.release = 21
 }
 
 java {
@@ -63,18 +71,18 @@ java {
 	targetCompatibility = JavaVersion.VERSION_21
 }
 
-jar {
+tasks.getByName<Jar>("jar") {
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${archives_base_name}" }
 	}
 }
 
 // configure the maven publication
 publishing {
 	publications {
-		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
-			from components.java
+		register("mavenJava", MavenPublication::class) {
+			artifactId = archives_base_name
+			from(components["java"])
 		}
 	}
 
