@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minCompatibilityVersion": "0.8",
+  "package": "com.example.handmod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "HandMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
