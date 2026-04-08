@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.example.mixin",
+	"compatibilityLevel": "JAVA_16",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
